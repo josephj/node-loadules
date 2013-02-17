@@ -9,14 +9,54 @@ because of YUI's file layout. It seems that you can only maintain meta-data
 manually. It must be annoying if you have a lot of customized YUI modules
 in your project.
 
+## Bonus
+
+Loadules can also generate common meta-data in following PHP format.
+The following is sample output:
+
+```php
+<?php
+$config = json_decode('{
+    modules: {
+        "css": {
+            "welcome/_notificaiton": [
+                "index/welcome/_notification.css"
+            ]
+            "common/_sidebar": [
+                "index/common/_sidebar.css"
+            ]
+        }
+        "js": {
+            "welcome/_notificaiton": [
+                "index/welcome/_notification.js"
+            ]
+        }
+    }
+}');
+?>
 ```
-loadules <config_path>
-```
 
-It parses all YUI modules to generate YUI meta-data automatically.
+It would be extremely useful if you write a PHP loader to load static files.
+Take the following scenario for example:
 
+* PHP code:
 
-## Sample Config.js
+    ```php
+    $this->static_loader->set("welcome/_notification", "common/_sidebar");
+    echo $this->static_loader->load();
+    ```
+
+* Output HTML:
+
+    ```html
+    <link rel="stylesheet" type="text/css" href="/combo?f=index/welcome/_notification.css,index/common/_sidebar.css">
+    <script src="/combo?g=js"></script><!-- YUI Seed file and customized meta-data -->
+    <script>
+    YUI().use("welcome/_notifiation"); // Loads module according to YUI meta-data.
+    </script>
+    ```
+
+## Configuration File
 
 ```javascript
 module.exports = (function () {
@@ -102,3 +142,23 @@ module.exports = (function () {
 }());
 
 ```
+
+## Install
+
+```
+git clone git://github.com/josephj/loadules.git
+cd loadules
+sudo npm install . -g
+```
+
+
+## Usage
+
+
+```
+loadules <config_path>
+```
+
+It parses all YUI modules to generate YUI meta-data automatically.
+
+
