@@ -13,54 +13,17 @@ Loadules generates YUI meta-data by checking YUI module files in your
 local disk. You just need to execute the loadules CLI tool whenever
 you create a new YUI module. It will keep your meta-data file up-to-date.
 
-## Bonus
+## Install
 
-Loadules can also generate common meta-data in following PHP format.
-The following is sample output:
-
-```php
-<?php
-$config = json_decode('{
-    modules: {
-        "css": {
-            "welcome/_notificaiton": [
-                "index/welcome/_notification.css"
-            ]
-            "common/_sidebar": [
-                "index/common/_sidebar.css"
-            ]
-        }
-        "js": {
-            "welcome/_notificaiton": [
-                "index/welcome/_notification.js"
-            ]
-        }
-    }
-}');
-?>
+```
+git clone git://github.com/josephj/loadules.git
+cd loadules
+sudo npm install . -g
 ```
 
-It would be extremely useful if you write a PHP loader to load static files.
-Take the following scenario for example:
-
-* PHP code:
-
-    ```php
-    $this->static_loader->set("welcome/_notification", "common/_sidebar");
-    echo $this->static_loader->load();
-    ```
-
-* Output HTML:
-
-    ```html
-    <link rel="stylesheet" type="text/css" href="/combo?f=index/welcome/_notification.css,index/common/_sidebar.css">
-    <script src="/combo?g=js"></script><!-- YUI Seed file and customized meta-data -->
-    <script>
-    YUI().use("welcome/_notifiation"); // Loads module according to YUI meta-data.
-    </script>
-    ```
-
 ## Configuration File
+
+You need to provide a configuration so that Loadules can generate meta-data automatically for you.
 
 ```javascript
 module.exports = (function () {
@@ -147,17 +110,7 @@ module.exports = (function () {
 
 ```
 
-## Install
-
-```
-git clone git://github.com/josephj/loadules.git
-cd loadules
-sudo npm install . -g
-```
-
-
 ## Usage
-
 
 ```
 loadules <config_path>
@@ -165,4 +118,80 @@ loadules <config_path>
 
 It parses all YUI modules to generate YUI meta-data automatically.
 
+### Sample meta-data 
 
+```
+YUI.applyConfig({
+    "combine": true,
+    "comboBase": "//a.mimgs.com/combo?f=",
+    "comboSep": ",",
+    "fetchCSS": false,
+    "filter": "raw",
+    "lang": "",
+    "root": "lib/yui3/build/",
+    "skin": "miiicasa",
+    "groups": {
+        "lib": {
+            "combine": true,
+            "fetchCSS": false,
+            "root": "lib/",
+            "lang": [
+                "en-US",
+                "zh-TW",
+                "zh-CN",
+                "ru-RU"
+            ],
+            "modules": {...}
+        },
+        // ... other groups ...
+    }
+});
+
+```
+
+## Bonus
+
+Loadules can also generate common meta-data in following PHP format.
+The following is sample output:
+
+```php
+<?php
+$config = json_decode('{
+    modules: {
+        "css": {
+            "welcome/_notificaiton": [
+                "index/welcome/_notification.css"
+            ]
+            "common/_sidebar": [
+                "index/common/_sidebar.css"
+            ]
+        }
+        "js": {
+            "welcome/_notificaiton": [
+                "index/welcome/_notification.js"
+            ]
+        }
+    }
+}');
+?>
+```
+
+It would be extremely useful if you write a PHP loader to load static files.
+Take the following scenario for example:
+
+* PHP code:
+
+    ```php
+    $this->static_loader->set("welcome/_notification", "common/_sidebar");
+    echo $this->static_loader->load();
+    ```
+
+* Output HTML:
+
+    ```html
+    <link rel="stylesheet" type="text/css" href="/combo?f=index/welcome/_notification.css,index/common/_sidebar.css">
+    <script src="/combo?g=js"></script><!-- YUI Seed file and customized meta-data -->
+    <script>
+    YUI().use("welcome/_notifiation"); // Loads module according to YUI meta-data.
+    </script>
+    ```
