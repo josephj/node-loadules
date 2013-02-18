@@ -1,14 +1,5 @@
-#!/usr/bin/env node
-(function () {
-
-    /**
-     * Generates metadata configuration files by
-     * checking local JavaScript and CSS files.
-     *
-     * ```
-     * loadules <config file>
-     * ```
-     */
+/*global module */
+module.exports = (function () {
 
     "use strict";
 
@@ -25,9 +16,8 @@
         //==============
         _getModuleName,
         _findFiles,
-        _collect;
+        exec;
 
-    _config   = require("./config.js");
     _cconsole = require("colorize").console;
     _current  = {};
     _execSync = require("exec-sync");
@@ -135,7 +125,7 @@
         return files;
     };
 
-    (function () {
+    exec = function (path) {
 
         var modules,    // Metadata cache.
             files,      // Matches files by _findFiles.
@@ -156,6 +146,8 @@
             i,          // source offset.
             j,          // file offset.
             k;
+
+        _config     = require(path);
 
         groups      = _config.groups,
         ignore      = _config.ignore,
@@ -323,7 +315,7 @@
             " * $ loadules <config file>",
             " */",
             "",
-            "$config[\"modules\"] = json_decode('" + JSON.stringify(_phpConfig) + "');",
+            "$config[\"modules\"] = json_decode('" + JSON.stringify(_phpConfig, null, 4) + "');",
             "?>"
         ].join("\n");
         _fs.writeFileSync(
@@ -333,6 +325,10 @@
         _cconsole.log("#green[INFO] Output PHP Metadata: \n    #bold[" +
             _config.php_output_path.replace("{USER}", process.env.USER) + "]"
         );
+    };
 
-    }());
+    return {
+        exec: exec
+    };
+
 }());
