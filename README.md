@@ -7,7 +7,11 @@ Any project using YUI should have many customized modules using `YUI.add`.
 The YUI build tool, shifter, is not suitable for general purpose, mainly
 because of YUI's file layout. It seems that you can only maintain meta-data
 manually. It must be annoying if you have a lot of customized YUI modules
-in your project.
+in your project. 
+
+Loadules generates YUI meta-data by checking YUI module files in your
+local disk. You just need to execute the loadules CLI tool whenever
+you create a new YUI module. It will keep your meta-data file up-to-date.
 
 ## Bonus
 
