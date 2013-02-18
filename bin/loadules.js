@@ -45,6 +45,7 @@
         })
         .argv;
 
+    _path = _fs.realpathSync(_path);
     _loadules.exec(_path);
 
 }());

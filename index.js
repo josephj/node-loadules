@@ -127,6 +127,7 @@ module.exports = (function () {
 
     exec = function (path) {
 
+
         var modules,    // Metadata cache.
             files,      // Matches files by _findFiles.
             newIgnore,
@@ -148,7 +149,6 @@ module.exports = (function () {
             k;
 
         _config     = require(path);
-
         groups      = _config.groups,
         ignore      = _config.ignore,
         sourcePaths = _config.source_paths,
