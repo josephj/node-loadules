@@ -14,6 +14,7 @@
     "dependencies": {
         "exec-sync": "~0.1.5",
         "colorize": "~0.1.0",
-        "optimist": "~0.3.5"
+        "optimist": "~0.3.5",
+        "hashish": "~0.0.4"
     }
 }
