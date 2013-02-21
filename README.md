@@ -1,7 +1,14 @@
-Loadules
-========
+node-loadules
+==============
 
-Loadules generates YUI meta-data and meta-data in PHP.
+## About Loadules
+
+Loadules is a portmanteau word that blends the words load and modules.
+In miiiCasa, it means a set of tools for loading JavaScript and CSS module files.
+node-loadules is a CLI tool written by Node.js and and is responsible for 
+generating metadata files.
+
+## Customized YUI Modules
 
 Any project using YUI should have many customized modules using `YUI.add`.
 The YUI build tool, shifter, is not suitable for general purpose, mainly
