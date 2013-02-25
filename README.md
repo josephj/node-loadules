@@ -189,8 +189,8 @@ Take the following scenario for example:
 * PHP code:
 
     ```php
-    $this->static_loader->set("welcome/_notification", "common/_sidebar");
-    echo $this->static_loader->load();
+    $this->loadules->set("welcome/_notification", "common/_sidebar");
+    echo $this->loadules->load();
     ```
 
 * Output HTML:
